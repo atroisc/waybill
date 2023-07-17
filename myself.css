@@ -1,0 +1,49 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .header img {
+    margin-right: 100px;
+    margin-left: 20px;
+
+  }
+  
+  .header h1 {
+    margin-right: 10px;
+  }
+  
+  .date {
+    margin-left: 20;
+  }
+  
+  .address {
+    display: flex;
+    align-items: top;
+    justify-content: space-between;
+    margin-bottom: 50px;
+  }
+  .bill {
+    display: flex;
+    align-items: top;
+    margin-right: 150px;
+  }
+  .them {
+    margin-right: 10px;
+  }
+  .ship {
+    display: flex;
+    align-items: top;
+  }
+  .theirs {
+    margin-right: 10px;
+  }
+  .list {
+    margin-bottom: 50px;
+    margin-top: 20px
+  }
+  .deets {
+    margin-bottom: 30px;
+  }
