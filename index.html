@@ -1,0 +1,79 @@
+const fs = require('fs');
+const readline = require('readline');
+const html2canvas = require('html2canvas');
+
+// Create a readline interface for user input
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+/* Read the waybill template HTML file */
+function readTemplate(callback) {
+  fs.readFile('myself.html', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading waybill template:', err);
+      process.exit(1);
+    }
+    callback(data);
+  });
+}
+
+// Generate HTML for the waybill form using user input
+function generateHTML(template, data) {
+  const { date, orderDate, lga, state, country, description, quantity, plateNumber } = data;
+
+  return template
+    .replace('{{date}}', date)
+    .replace('{{OrderDate}}', orderDate)
+    .replace('{{LGA}}', lga)
+    .replace('{{State}}', state)
+    .replace('{{Country}}', country)
+    .replace('{{FertilizerDescription}}', description)
+    .replace('{{Quantity}}', quantity)
+    .replace('{{plateNumber}}', plateNumber);
+}
+
+// Prompt the user for input
+function promptUser(template) {
+  rl.question('Enter the Date: ', (date) => {
+    rl.question('Enter the Order Date: ', (orderDate) => {
+      rl.question('Enter the LGA: ', (lga) => {
+        rl.question('Enter the State: ', (state) => {
+          rl.question('Enter the country: ', (country) => {
+            rl.question('Enter the fertilizer Description: ', (description) => {
+              rl.question('Enter the Quantity: ', (quantity) => {
+                rl.question('Enter the Plate Number: ', (plateNumber) => {
+                  const data = {
+                    date,
+                    orderDate,
+                    lga,
+                    state,
+                    country,
+                    description,
+                    quantity,
+                    plateNumber,
+                  };
+
+                  const updatedHTML = generateHTML(template, data);
+                  console.log(updatedHTML);
+
+                  // Render the updated HTML to a webpage
+                  const container = document.createElement('div');
+                  container.innerHTML = updatedHTML;
+                  document.body.innerHTML = '';
+                  document.body.appendChild(container);
+
+                  rl.close();
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+}
+
+// Read the template file and start the application
+readTemplate((template) => promptUser(template));
